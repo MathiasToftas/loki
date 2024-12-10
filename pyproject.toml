@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "loki"
+name = "loki-utils"
 version = "0.0.1"
 authors = [{ name = "Mathias Örtenberg Toftås" }]
 maintainers = [{ name = "Mathias Örtenberg Toftås" }]
@@ -12,7 +12,7 @@ keywords = ["parsing", "xml"]
 dependencies = ["click", "Levenshtein"]
 
 [project.optional-dependencies]
-dev = ["pre-commit"]
+dev = ["pre-commit", "build", "twine"]
 
 [project.scripts]
 loki = "loki.__init__:main"
