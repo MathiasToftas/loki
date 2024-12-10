@@ -24,6 +24,13 @@ xml_output = Output("output", "o", "Output XML Path")
     help="Tags to remove, can be specified multiple times or as a semicolon separated list ('-t row -t p' or '-a row:p')",
 )
 @click.option(
+    "--whitespace",
+    "-w",
+    is_flag=True,
+    help="strip starting and trailing whitespace from element text",
+    default=False,
+)
+@click.option(
     "--discard-children",
     "-d",
     is_flag=True,
@@ -35,6 +42,7 @@ def strip(
     output: Path | None,
     attributes: tuple[str, ...],
     tags: tuple[str, ...],
+    whitespace: bool,
     discard_children: bool,
 ):
     """Remove attributes and tags from XML. Child elements of removed elements are added to the removed elements parent."""
@@ -71,6 +79,8 @@ def strip(
             for attribute in attributes:
                 if attribute in element.attrib:
                     del element.attrib[attribute]
+            if whitespace and element.text:
+                element.text = element.text.strip()
         xml_str = ET.tostring(tree, encoding="unicode", short_empty_elements=False)
 
         with xml_output.open(output) as o:
